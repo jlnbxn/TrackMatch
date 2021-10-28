@@ -1,0 +1,16 @@
+[functions]
+# Directory with serverless functions, including background functions,
+# to deploy. This is relative to the base directory if one has been set, 
+# or the root directory if a base hasn’t been set.
+directory = "functions/"
+
+[[headers]]
+# Define which paths this specific [[headers]] block will cover.
+for = "/*"
+[headers.values]
+Access-Control-Allow-Origin = "*"
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
