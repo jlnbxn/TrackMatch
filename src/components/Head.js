@@ -4,8 +4,8 @@ function Head({ themeColor, name }) {
     return (
         <Helmet>
             <meta charSet="utf-8" />
-            <meta name="theme-color" content={themeColor} />
-            <title>TrackMatch for {name}</title>
+            <meta name="theme-color" content={themeColor || "#fff"} />
+            <title>TrackMatch {name && ("for" + name)}</title>
             <link rel="canonical" href="http://mysite.com/example" />
         </Helmet>
     )

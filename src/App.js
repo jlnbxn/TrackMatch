@@ -350,45 +350,45 @@ const App = ({ vendor, secondaryVendor }) => {
           />
         }
       >
-        <div style={{ height: "100%", position: "relative" }}>
-          <Lock
-            onClick={(e) => {
-              if (!vendor.api) e.preventDefault();
-            }}
-            disabled={!vendor.api}
-          />
-          <SidebarItem>
-            <TabList>
-              <Tab label={"Textbox"}>
-                <Search onSubmit={textboxSearch} disabled={!vendor.api} />
+        {/* <div style={{ height: "100%", position: "relative" }}> */}
+        {/* <Lock
+          onClick={(e) => {
+            if (!vendor.api) e.preventDefault();
+          }}
+          disabled={!vendor.api}
+        /> */}
+        <SidebarItem locked={!api}>
+          <TabList>
+            <Tab label={"Textbox"}>
+              <Search onSubmit={textboxSearch} disabled={!vendor.api} />
+            </Tab>
+            {api && secondaryApi && (
+              <Tab label={"Convert"}>
+                <Convert
+                  onSubmit={playlistSearch}
+                  playlists={playlists}
+                  loading={loading}
+                  count={count}
+                  total={total}
+                  halt={() => (halt.current = true)}
+                />
               </Tab>
-              {api && secondaryApi && (
-                <Tab label={"Convert"}>
-                  <Convert
-                    onSubmit={playlistSearch}
-                    playlists={playlists}
-                    loading={loading}
-                    count={count}
-                    total={total}
-                    halt={() => (halt.current = true)}
-                  />
-                </Tab>
-              )}
-            </TabList>
-          </SidebarItem>
-          <SidebarItem header="Create Playlist">
-            <Create onSubmit={createPlaylist} />
-          </SidebarItem>
-          {list.length > 0 && (
-            <ListInfo
-              reset={() => setList([])}
-              download={() => downloadCSV(createCsv(list))}
-              total={total}
-              count={total}
-              list={list}
-            />
-          )}
-        </div>
+            )}
+          </TabList>
+        </SidebarItem  >
+        <SidebarItem header="Create Playlist" locked={!api}>
+          <Create onSubmit={createPlaylist} />
+        </SidebarItem>
+        {list.length > 0 && (
+          <ListInfo
+            reset={() => setList([])}
+            download={() => downloadCSV(createCsv(list))}
+            total={total}
+            count={total}
+            list={list}
+          />
+        )}
+        {/* </div> */}
       </Sidebar>
       <List>
         {list.length ? (

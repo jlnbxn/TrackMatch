@@ -4,6 +4,7 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
   padding-inline-start: 25px;
   padding-inline-end: 25px;
   margin-bottom: 17px;
@@ -17,22 +18,33 @@ const FormHeader = styled.h3`
   line-height: var(--sidebarHeaderLineHeight);
 `;
 const Lock = styled.div`
-  filter: grayscale(1);
-  pointer-events: none;
-  z-index: 900000;
-  display: block;
-  height: 100%;
-  width: 100%;
+    /* pointer-events: none; */
+    position: absolute;
+    left: 0;
+    z-index: 900000;
+    display: block;
+    opacity: 0.7;
+    background: var(--sidebar-background-color);
+    height: 100%;
+    width: 100%;
 `;
 
-const SidebarItem = ({ children, header }) => {
-    return (
-        <Root>
-            {header && <FormHeader>{header}</FormHeader>}
-            {children}
-            <Lock />
-        </Root>
-    );
+
+const SidebarItem = ({ children, header, locked }) => {
+  return (
+    <Root>
+      {header && <FormHeader>{header}</FormHeader>}
+      {children}
+      {/* <Lock onClick={(e) => {
+        e.preventDefault();
+      }} /> */}
+      {
+        locked && <Lock onClick={(e) => {
+          e.preventDefault();
+        }} />
+      }
+    </Root>
+  );
 };
 
 export default SidebarItem;
