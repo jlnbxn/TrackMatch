@@ -1,14 +1,10 @@
 export default class AppleMusicApi {
     constructor({ developerToken, userToken }) {
         this.developerToken = developerToken;
-        this.market = "at";
-        this.loggedIn = userToken !== undefined;
         this.base_uri = "https://api.music.apple.com/v1";
+        this.market = "";
         this.userToken = userToken || null;
-        this.name = "appleMusic";
-        this.formattedName = "Apple Music";
-        this.pathName = "/apple-music";
-        this.themeColor = "#F9F9F9";
+        this.loggedIn = userToken !== undefined;
         this.headers = {
             Authorization: "Bearer " + developerToken,
             "Music-User-Token": userToken || null,
@@ -27,7 +23,6 @@ export default class AppleMusicApi {
             Authorization: "Bearer " + this.developerToken,
             "Music-User-Token": this.userToken,
         };
-
     }
 
     setLoggedIn(bool) {
@@ -182,8 +177,6 @@ export default class AppleMusicApi {
             artistName: item.attributes?.artistName || null,
             albumName: item.attributes?.albumName || null,
         }));
-
-
     }
 
     async getUserLibrary() {

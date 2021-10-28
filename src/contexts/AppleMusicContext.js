@@ -42,7 +42,6 @@ const AppleMusicContextProvider = ({ children }) => {
         api: null,
     });
     const userToken = useAppleMusicAuth();
-    console.log(window.MusicKit.getInstance());
 
     const setUserToken = (userToken) => {
         setAppleMusic((appleMusic) => {

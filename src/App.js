@@ -231,7 +231,6 @@ const App = ({ vendor, secondaryVendor }) => {
     setCount(0);
     preview.src = ""; // Stop any music
     const data = new FormData(event.currentTarget);
-    console.log(data.values());
     const id = data.get("playlists");
     const type = "songs";
     const autoselect = data.get("autoselect");

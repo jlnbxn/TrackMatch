@@ -1,21 +1,16 @@
 export default class SpotifyApi {
     constructor({ client_id, redirect_uri, access_token, scopes }) {
         this.client_id = client_id;
-        this.scopes = scopes;
-        this.redirect_uri = redirect_uri;
         this.base_uri = "https://api.spotify.com/v1";
+        this.market = "";
         this.access_token = access_token || null;
         this.loggedIn = access_token !== undefined;
-        this.name = "spotify";
-        this.formattedName = "Spotify";
-        this.pathName = "/spotify";
-        this.themeColor = "#000000";
-
-        // this.access_token = localStorage.getItem('spotify_access_token') || '';
         this.headers = {
             "Content-Type": "application/json",
             Authorization: "Bearer " + (access_token || ""),
         };
+        this.scopes = scopes;
+        this.redirect_uri = redirect_uri;
         this.init();
     }
 
@@ -88,10 +83,9 @@ export default class SpotifyApi {
 
     async search(term, { market = this.market, type = "track", offset = 0 }) {
         let responseType;
+        // The following conditionals deal with the fact that the 'type' in the query is a different one than the object key in the response
         if (type === "songs") {
             type = "track";
-            // This line deals with the fact that the 'type' in the query is a different one than the object key in the response
-
             responseType = "tracks";
         }
         if (type === "albums") {
@@ -200,7 +194,6 @@ export default class SpotifyApi {
 
             tracks = tracks.concat(response.items);
         }
-
 
         return tracks.map((item) => ({
             id: item.track?.id,
