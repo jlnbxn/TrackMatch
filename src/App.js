@@ -160,7 +160,7 @@ const App = ({ vendor, secondaryVendor }) => {
           };
           return [...updatedList];
         });
-      });
+      })
     },
     [api]
   );
@@ -234,6 +234,7 @@ const App = ({ vendor, secondaryVendor }) => {
     const id = data.get("playlists");
     const type = "songs";
     const autoselect = data.get("autoselect");
+    console.log(autoselect)
     const playlistTracks = await secondaryApi.getPlaylistTracks(id);
 
     setTotal(playlistTracks.length);
@@ -328,10 +329,10 @@ const App = ({ vendor, secondaryVendor }) => {
     await api.createPlaylist(name, description, tracks);
     if (missingTracksBox) {
       await secondaryApi.createPlaylist(
-        "missingtracks",
+        `${name} Missing Tracks`,
         description,
         missingTracks
-      );
+      ).then(() => alert('All done.'))
     }
   };
 
@@ -342,21 +343,9 @@ const App = ({ vendor, secondaryVendor }) => {
         vendor={vendor.name}
         open={open}
         setOpen={setOpen}
-        footer={
-          <Footer
-            vendor={vendor}
-            secondaryVendor={secondaryVendor}
-            loading={loading}
-          />
-        }
+
       >
-        {/* <div style={{ height: "100%", position: "relative" }}> */}
-        {/* <Lock
-          onClick={(e) => {
-            if (!vendor.api) e.preventDefault();
-          }}
-          disabled={!vendor.api}
-        /> */}
+
         <SidebarItem locked={!api}>
           <TabList>
             <Tab label={"Textbox"}>
@@ -377,7 +366,7 @@ const App = ({ vendor, secondaryVendor }) => {
           </TabList>
         </SidebarItem  >
         <SidebarItem header="Create Playlist" locked={!api}>
-          <Create onSubmit={createPlaylist} />
+          <Create onSubmit={createPlaylist} showMissingTracks={list.filter(el => el.sourceId !== null).length > 0} />
         </SidebarItem>
         {list.length > 0 && (
           <ListInfo
@@ -388,7 +377,11 @@ const App = ({ vendor, secondaryVendor }) => {
             list={list}
           />
         )}
-        {/* </div> */}
+        <Footer
+          vendor={vendor}
+          secondaryVendor={secondaryVendor}
+          loading={loading}
+        />
       </Sidebar>
       <List>
         {list.length ? (
@@ -403,6 +396,7 @@ const App = ({ vendor, secondaryVendor }) => {
               loved={searchObj.loved}
               type={searchObj.type}
               error={searchObj.error}
+              allMarkets={vendor.allMarkets}
               audio={audio}
               select={select}
               reload={reload}

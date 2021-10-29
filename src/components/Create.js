@@ -29,7 +29,7 @@ const Row = styled.div`
 `;
 
 
-const Create = ({ onSubmit }) => {
+const Create = ({ onSubmit, showMissingTracks }) => {
     return (
         <form onSubmit={onSubmit}>
             <Input
@@ -45,8 +45,8 @@ const Create = ({ onSubmit }) => {
             />
 
             <Row>
-                <Toggle label="Missing Tracks" id="missing_tracks" name="missing_tracks" value="missing_track" />
-                <Button type="submit">Create</Button>
+                {showMissingTracks && <Toggle label="Missing Tracks" id="missing_tracks" name="missing_tracks" value="missing_track" />}
+                <Button type="submit" style={{ marginLeft: 'auto' }}>Create</Button>
             </Row>
         </form>
 
