@@ -16,9 +16,8 @@ const Root = styled.nav`
   justify-content: flex-start;
   color: var(--systemSecondary);
   width: 100%;
-  /* 
-    height: -webkit-fill-available; */
-  height: 100vh;
+  /*     height: -webkit-fill-available; */
+  height: 100%;
 
   @media (min-width: 767px) {
     height: 100%;
@@ -58,8 +57,8 @@ const Scrollable = styled.div`
   pointer-events: initial;
   display: flex;
   flex-direction: column;
-  /* height: -webkit-fill-available;
-  height: 100vh; */
+  height: -webkit-fill-available;
+  height: 100vh;
   @media (min-width: 767px) {
     transform: translateX(0);
   }
@@ -74,7 +73,7 @@ const Sidebar = ({ children, vendor, open, setOpen, footer }) => {
       </Header>
       <Scrollable open={open}>
         {children}
-        {footer}
+        {/* {footer} */}
       </Scrollable>
     </Root>
   );

@@ -4,8 +4,14 @@ import Button from "./Button";
 
 const Root = styled.footer`
   margin-top: auto;
-  margin-bottom: 18px;
+  margin-bottom: 1rem;
+
   padding: 0 25px;
+  @media screen and (max-width: 767px) {
+    _::-webkit-full-page-media, _:future, :root .safari_only {
+        padding-bottom: 65px; //resize 
+    }
+}
 `;
 
 const LinkButton = styled.div`
