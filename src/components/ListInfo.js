@@ -46,7 +46,7 @@ const ListInfo = ({ reset, download, total, list }) => {
                     <div>Found</div>
                     <div>{list.filter((el) => el.results.length).length}</div>
                     <div>Missing</div>
-                    <div>{list.filter((el) => !el.results.length).length}</div>
+                    <div>{list.filter((el) => !Object.keys(el.match).length).length}</div>
                     <div>Selected</div>
                     <div>
                         {list.length &&

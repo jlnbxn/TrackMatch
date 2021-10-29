@@ -39,7 +39,7 @@ const Search = ({ onSubmit, loading, count, total, halt }) => {
       <Textarea
         name="textbox"
         placeholder="Search"
-        defaultValue="test"
+        // defaultValue="test"
         required
         rows={4}
       />

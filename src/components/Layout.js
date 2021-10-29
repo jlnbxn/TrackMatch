@@ -6,6 +6,7 @@ const Grid = styled.div`
   background-color: var(--main-background-color);
   grid-template-columns: 1fr;
   height: -webkit-fill-available;
+  
   @media (min-width: 767px) {
     grid-template-columns: 300px minmax(0, 1fr);
     height: 100vh;

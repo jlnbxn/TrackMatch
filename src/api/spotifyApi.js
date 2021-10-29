@@ -11,6 +11,8 @@ export default class SpotifyApi {
         };
         this.scopes = scopes;
         this.redirect_uri = redirect_uri;
+        this.allMarkets = []
+
         this.init();
     }
 
@@ -19,6 +21,9 @@ export default class SpotifyApi {
         this.market = await this.getCurrentUser().then((res) => res.country);
         this.user_id = await this.getCurrentUser().then((res) => res.id);
     }
+
+
+
 
     getLoginUrl() {
         return (
@@ -77,6 +82,7 @@ export default class SpotifyApi {
                 headers: this.headers,
             }
         ).then((res) => res.json());
+        console.log(response)
 
         return response.tracks.items;
     }
@@ -101,7 +107,7 @@ export default class SpotifyApi {
             }
         ).then((res) => res.json());
 
-        return response?.[responseType].items;
+        return response?.[responseType]?.items || [];
     }
 
     async getUserPlaylists() {

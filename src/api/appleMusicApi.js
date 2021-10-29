@@ -17,7 +17,6 @@ export default class AppleMusicApi {
         await this.getUserStorefront();
     }
 
-
     setUserToken(userToken) {
         this.userToken = userToken;
         this.headers = {
@@ -41,7 +40,7 @@ export default class AppleMusicApi {
 
     async getAlbumById(album_id, market = this.market) {
         const response = await fetch(
-            `${this.base_uri}/catalog/${market}/albums/${album_id}`,
+            `${this.base_uri}/v1/catalog/${market}/albums/${album_id}`,
             {
                 headers: this.headers,
             }
@@ -58,7 +57,7 @@ export default class AppleMusicApi {
         let ids;
 
         response = await fetch(
-            `${this.base_uri}/catalog/${this.market}/songs?filter[isrc]=${isrc}`,
+            `${this.base_uri}/v1/catalog/${this.market}/songs?filter[isrc]=${isrc}`,
             {
                 headers: this.headers,
             }
@@ -74,7 +73,7 @@ export default class AppleMusicApi {
     }
     async checkIfLibraryContains(ids) {
         const response = await fetch(
-            `${this.base_uri}/catalog/${this.market}/songs?ids=${ids}&include=library`,
+            `${this.base_uri}/v1/catalog/${this.market}/songs?ids=${ids}&include=library`,
             {
                 headers: this.headers,
             }
@@ -105,19 +104,20 @@ export default class AppleMusicApi {
         };
 
         const response = await fetch(
-            `${this.base_uri}/catalog/${market}/search?term=${formatTerm(
+            `${this.base_uri}/v1/catalog/${market}/search?term=${formatTerm(
                 term
             )}&types=${type}&limit=25`,
             {
                 headers: this.headers,
             }
         ).then((res) => res.json());
+        console.log(response)
 
         return response.results?.[type]?.data;
     }
 
     async getUserPlaylists() {
-        let playlists = []
+        let playlists = [];
         let response = await fetch(`${this.base_uri}/v1/me/library/playlists`, {
             headers: this.headers,
         }).then((res) => res.json());
@@ -125,22 +125,17 @@ export default class AppleMusicApi {
             return { name: playlist.attributes.name, id: playlist.id };
         });
 
-        console.log(response)
-
         while (response.next) {
             response = await fetch(`${this.base_uri + response.next}`, {
                 headers: this.headers,
             }).then((res) => res.json());
 
-            playlists = playlists.concat(response.data.map((playlist) => {
-                return { name: playlist.attributes.name, id: playlist.id };
-            }));
-
+            playlists = playlists.concat(
+                response.data.map((playlist) => {
+                    return { name: playlist.attributes.name, id: playlist.id };
+                })
+            );
         }
-
-        // const playlists = response.data.map((playlist) => {
-        //     return { name: playlist.attributes.name, id: playlist.id };
-        // });
 
         return playlists;
     }
@@ -187,14 +182,8 @@ export default class AppleMusicApi {
 
             tracks = tracks.concat(response.data);
         }
+        console.log(tracks)
 
-        console.log(tracks.map((item) => ({
-            name: item.attributes.name,
-            id: item.id || null,
-            isrc: item.relationships?.catalog.data[0]?.attributes?.isrc || null,
-            artistName: item.attributes?.artistName || null,
-            albumName: item.attributes?.albumName || null,
-        })))
         return tracks.map((item) => ({
             name: item.attributes.name,
             id: item.id || null,
@@ -211,14 +200,14 @@ export default class AppleMusicApi {
     }
 
     async getCatalogPlaylist(id, market = "at") {
-        return await fetch(`${this.base_uri}/catalog/${market}/playlists/${id}`, {
+        return await fetch(`${this.base_uri}/v1/catalog/${market}/playlists/${id}`, {
             headers: this.headers,
         }).then((res) => res.json());
     }
 
     async getLocalEquivalents(equivalents, market = "at") {
         return await fetch(
-            `${this.base_uri}/catalog/${market}/playlists/songs?filter[${equivalents}]`,
+            `${this.base_uri}/v1/catalog/${market}/playlists/songs?filter[${equivalents}]`,
             {
                 headers: this.headers,
             }
@@ -227,7 +216,7 @@ export default class AppleMusicApi {
 
     async getAlbumByUpc(upc, isrc, title, positionInAlbum) {
         return await fetch(
-            `${this.base_uri}/catalog/${this.market}/albums?filter[upc]=${upc}`,
+            `${this.base_uri}/v1/catalog/${this.market}/albums?filter[upc]=${upc}`,
             {
                 headers: this.headers,
             }
@@ -236,7 +225,7 @@ export default class AppleMusicApi {
 
     async getTrackById(track_id) {
         return await fetch(
-            `${this.base_uri}/catalog/${this.market}/songs/${track_id}`,
+            `${this.base_uri}/v1/catalog/${this.market}/songs/${track_id}`,
             {
                 headers: this.headers,
             }
@@ -245,7 +234,7 @@ export default class AppleMusicApi {
 
     async getCatalogTracks(ids, { market = this.market }) {
         return await fetch(
-            `${this.base_uri}/catalog/${market}/songs?ids=${ids}?include=albums&extend=upc`,
+            `${this.base_uri}/v1/catalog/${market}/songs?ids=${ids}?include=albums&extend=upc`,
             {
                 headers: this.headers,
             }
@@ -254,11 +243,12 @@ export default class AppleMusicApi {
 
     async getEquivalent(ids) {
         const response = await fetch(
-            `${this.base_uri}/catalog/at/songs?filter[equivalents]=${ids}`,
+            `${this.base_uri}/v1/catalog/at/songs?filter[equivalents]=${ids}&extend=[contentRating]`,
             {
                 headers: this.headers,
             }
         ).then((res) => res.json());
+        console.log(response)
 
         return response;
     }
@@ -280,7 +270,7 @@ export default class AppleMusicApi {
         };
 
         return await fetch(
-            `${this.base_uri}/catalog/${this.market}/search?term=${formatTerm(
+            `${this.base_uri}/v1/catalog/${this.market}/search?term=${formatTerm(
                 term
             )}&types=albums&limit=5`,
             {

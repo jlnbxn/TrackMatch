@@ -176,6 +176,7 @@ const Item = ({
     durationMs,
     previewUrl,
     isrc,
+    explicit,
     id,
   } = resultObj || {};
 
@@ -229,7 +230,7 @@ const Item = ({
         <p>{albumName && albumName}</p>
         <p>{durationMs && millisToMinutesAndSeconds(durationMs)}</p>
         <p>{releaseDate && releaseDate}</p>
-        <p>{isrc && isrc}</p>
+        <p>{isrc && isrc}{explicit && ' 🅴'}</p>
       </Metadata>
     </Root>
   );
