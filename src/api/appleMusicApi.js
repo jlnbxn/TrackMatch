@@ -1,7 +1,7 @@
 export default class AppleMusicApi {
     constructor({ developerToken, userToken }) {
         this.developerToken = developerToken;
-        this.base_uri = "https://api.music.apple.com/v1";
+        this.base_uri = "https://api.music.apple.com";
         this.market = "";
         this.userToken = userToken || null;
         this.loggedIn = userToken !== undefined;
@@ -17,6 +17,7 @@ export default class AppleMusicApi {
         await this.getUserStorefront();
     }
 
+
     setUserToken(userToken) {
         this.userToken = userToken;
         this.headers = {
@@ -30,7 +31,7 @@ export default class AppleMusicApi {
     }
 
     async getUserStorefront() {
-        const response = await fetch(`${this.base_uri}/me/storefront`, {
+        const response = await fetch(`${this.base_uri}/v1/me/storefront`, {
             headers: this.headers,
         }).then((res) => res.json());
 
@@ -81,7 +82,7 @@ export default class AppleMusicApi {
 
         // this gets us the ratings, however, it's not really useful since rated (aka loved or dislike) songs are neither automatically added to the library, nor can be seen in the apple music app at all at a glance
         // const response = await fetch(
-        //     `${this.base_uri}/me/ratings/songs?ids=${ids}`,
+        //     `${this.base_uri}/v1/me/ratings/songs?ids=${ids}`,
         //     {
         //         headers: this.headers,
         //     }
@@ -116,13 +117,30 @@ export default class AppleMusicApi {
     }
 
     async getUserPlaylists() {
-        const response = await fetch(`${this.base_uri}/me/library/playlists`, {
+        let playlists = []
+        let response = await fetch(`${this.base_uri}/v1/me/library/playlists`, {
             headers: this.headers,
         }).then((res) => res.json());
-
-        const playlists = response.data.map((playlist) => {
+        playlists = response.data.map((playlist) => {
             return { name: playlist.attributes.name, id: playlist.id };
         });
+
+        console.log(response)
+
+        while (response.next) {
+            response = await fetch(`${this.base_uri + response.next}`, {
+                headers: this.headers,
+            }).then((res) => res.json());
+
+            playlists = playlists.concat(response.data.map((playlist) => {
+                return { name: playlist.attributes.name, id: playlist.id };
+            }));
+
+        }
+
+        // const playlists = response.data.map((playlist) => {
+        //     return { name: playlist.attributes.name, id: playlist.id };
+        // });
 
         return playlists;
     }
@@ -140,7 +158,7 @@ export default class AppleMusicApi {
             },
         };
 
-        return await fetch(`${this.base_uri}/me/library/playlists`, {
+        return await fetch(`${this.base_uri}/v1/me/library/playlists`, {
             method: "POST",
             headers: this.headers,
             body: JSON.stringify(LibraryPlaylistCreationRequest),
@@ -151,7 +169,7 @@ export default class AppleMusicApi {
         let tracks = [];
         let response;
         response = await fetch(
-            `${this.base_uri}/me/library/playlists/${playlist_id}/tracks?&include=catalog`,
+            `${this.base_uri}/v1/me/library/playlists/${playlist_id}/tracks?&include=catalog`,
             {
                 headers: this.headers,
             }
@@ -170,6 +188,13 @@ export default class AppleMusicApi {
             tracks = tracks.concat(response.data);
         }
 
+        console.log(tracks.map((item) => ({
+            name: item.attributes.name,
+            id: item.id || null,
+            isrc: item.relationships?.catalog.data[0]?.attributes?.isrc || null,
+            artistName: item.attributes?.artistName || null,
+            albumName: item.attributes?.albumName || null,
+        })))
         return tracks.map((item) => ({
             name: item.attributes.name,
             id: item.id || null,
@@ -180,7 +205,7 @@ export default class AppleMusicApi {
     }
 
     async getUserLibrary() {
-        return await fetch(`${this.base_uri}/me/library/songs`, {
+        return await fetch(`${this.base_uri}/v1/me/library/songs`, {
             headers: this.headers,
         }).then((res) => res.json());
     }
@@ -240,7 +265,7 @@ export default class AppleMusicApi {
 
     async getUserTrack(id) {
         return await fetch(
-            `${this.base_uri}/me/library/songs/${id}?extend=releaseDate`,
+            `${this.base_uri}/v1/me/library/songs/${id}?extend=releaseDate`,
             {
                 headers: this.headers,
             }
