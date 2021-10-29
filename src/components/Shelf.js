@@ -224,6 +224,7 @@ const ShelfBody = styled.div`
   /* overflow: hidden; */
 `;
 
+
 const Shelf = ({
   match,
   term,
@@ -237,6 +238,7 @@ const Shelf = ({
   previewAudio,
   audio,
   error,
+  allMarkets
 }) => {
   const scroller = useRef(null);
 
@@ -265,20 +267,28 @@ const Shelf = ({
           behavior: "smooth",
         });
         break;
+      default:
+        scroller.current.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
     }
   };
 
   return (
     <ShelfWrapper>
-      <ShelfHeader onSubmit={(event) => reload(event, type, index)}>
+      <ShelfHeader onSubmit={(event) => {
+        reload(event, type, index)
+        scrollToItem(scroller)
+      }}>
         <ResultsFor>
           <label htmlFor="term">Results for&nbsp;</label>
           <Input size={term.length} defaultValue={term} name="term" />
         </ResultsFor>
         <ResultsOptions>
           <Select name="market" defaultValue={market}>
-            <option value="AT">AT</option>
-            <option value="US">US</option>
+            {allMarkets.map((el, i) => <option key={i} value={el}>{el.toUpperCase()}</option>)}
           </Select>
           <TextButton type="submit">Reload</TextButton>
         </ResultsOptions>
@@ -352,3 +362,4 @@ function areEqual(prevProps, nextProps) {
 }
 
 export default memo(Shelf, areEqual);
+
