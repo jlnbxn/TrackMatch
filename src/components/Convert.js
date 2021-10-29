@@ -45,10 +45,11 @@ const Convert = ({ onSubmit, playlists, loading, count, total, halt }) => {
                     id="autoselect"
                     name="autoselect"
                     value="autoselect"
+                    defaultChecked={true}
                 />
                 {loading ? (
                     <Button onClick={halt} type="button">
-                        <ProgressCircle total={total} count={count} />{" "}
+                        <ProgressCircle total={total} count={count} />
                     </Button>
                 ) : (
                     <Button type="submit" style={{ marginLeft: "auto" }}>
