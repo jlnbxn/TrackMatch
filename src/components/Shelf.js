@@ -78,6 +78,7 @@ const Input = styled.input`
   padding: 0px;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 100%;
   &:focus {
     outline: none;
   }
@@ -89,6 +90,7 @@ const ResultsFor = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 100%;
   line-height: var(--resultsForLineHeight);
   letter-spacing: var(--resultsForLetterSpacing);
   font-weight: var(--resultsForFontWeight);
@@ -279,12 +281,13 @@ const Shelf = ({
   return (
     <ShelfWrapper>
       <ShelfHeader onSubmit={(event) => {
-        reload(event, type, index)
-        scrollToItem(scroller)
+
+
+        reload(event, type, index).then(() => scrollToItem(scroller))
       }}>
         <ResultsFor>
           <label htmlFor="term">Results for&nbsp;</label>
-          <Input size={term.length} defaultValue={term} name="term" />
+          <Input defaultValue={term} name="term" />
         </ResultsFor>
         <ResultsOptions>
           <Select name="market" defaultValue={market}>

@@ -154,6 +154,7 @@ const App = ({ vendor, secondaryVendor }) => {
           const updatedList = [...oldList];
           updatedList[index] = {
             ...oldList[index],
+            term,
             results:
               response.map((result) => new Track(vendor.name, result)) || [],
             error,
@@ -161,6 +162,7 @@ const App = ({ vendor, secondaryVendor }) => {
           return [...updatedList];
         });
       })
+      return new Promise(resolve => resolve("reloaded"))
     },
     [api]
   );
@@ -183,24 +185,33 @@ const App = ({ vendor, secondaryVendor }) => {
       if (halt.current) break;
       let error = { message: "", type: "" };
       let response;
+      let loved = []
 
       // Only search non-empty lines, excluding invisible characters
       if (line !== "\r" && line.length) {
         response = await api.search(line, { type });
-        if (type === "albums") {
-          response = response.map((result) => new Album(vendor.name, result));
-        } else {
-          response = response.map((result) => new Track(vendor.name, result));
+        console.log(response)
+
+        if (response.length) {
+          if (type === "albums") {
+            response = response.map((result) => new Album(vendor.name, result));
+          } else {
+            response = response.map((result) => new Track(vendor.name, result));
+          }
+
+          const ids = response.map((result) => result.id);
+          loved = await api.checkIfLibraryContains(ids, type);
         }
+        else {
 
-        const ids = response.map((result) => result.id);
-        const loved = await api.checkIfLibraryContains(ids, type);
-
-        if (!response.length) {
           error.type = "No results found. ";
           error.message =
             "Please refine your search and click the 'Reload' button.";
         }
+
+
+
+
 
         setList((prevList) => [
           ...prevList,
@@ -209,7 +220,7 @@ const App = ({ vendor, secondaryVendor }) => {
             sourceId: null,
             term: line,
             type,
-            market: api.country,
+            market: api.market,
             match: {},
             loved: loved,
             results: response || [],
