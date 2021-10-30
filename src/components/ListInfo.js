@@ -39,7 +39,7 @@ const ListInfo = ({ reset, download, total, list }) => {
         animation-duration: 100ms;
       `}
         >
-            <SidebarItem header="List">
+            <SidebarItem header="List Info">
                 <Table>
                     <div>Total</div>
                     <div>{total || list.length}</div>
