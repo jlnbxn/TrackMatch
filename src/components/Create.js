@@ -28,7 +28,6 @@ const Row = styled.div`
   align-items: center;
 `;
 
-
 const Create = ({ onSubmit, showMissingTracks }) => {
     return (
         <form onSubmit={onSubmit}>
@@ -45,11 +44,20 @@ const Create = ({ onSubmit, showMissingTracks }) => {
             />
 
             <Row>
-                {showMissingTracks && <Toggle label="Missing Tracks" id="missing_tracks" name="missing_tracks" value="missing_track" />}
-                <Button type="submit" style={{ marginLeft: 'auto' }}>Create</Button>
+                {showMissingTracks && (
+                    <Toggle
+                        label="Missing Tracks"
+                        id="missing_tracks"
+                        name="missing_tracks"
+                        value="missing_track"
+                        defaultChecked={true}
+                    />
+                )}
+                <Button type="submit" style={{ marginLeft: "auto" }}>
+                    Create
+                </Button>
             </Row>
         </form>
-
     );
 };
 

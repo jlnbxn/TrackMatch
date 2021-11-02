@@ -87,6 +87,7 @@ export default class AppleMusicApi {
         //     }
         // ).then((res) => res.json());
 
+        console.log(response)
         return response.data.map(
             (item) => item.relationships.library.data.length > 0
         );
@@ -113,7 +114,7 @@ export default class AppleMusicApi {
         ).then((res) => res.json());
         console.log(response)
 
-        return response.results?.[type]?.data;
+        return response.results?.[type]?.data || [];
     }
 
     async getUserPlaylists() {

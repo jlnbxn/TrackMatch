@@ -349,7 +349,7 @@ const App = ({ vendor, secondaryVendor }) => {
 
   return (
     <Layout vendor={vendor.name}>
-      <Head themeColor={vendor.themeColor} name={vendor.formattedName} />
+      <Head vendor={vendor} />
       <Sidebar
         vendor={vendor.name}
         open={open}

@@ -11,7 +11,7 @@ const scopes = [
     "user-read-private",
     "playlist-modify-private",
     "playlist-modify-public",
-    "streaming",
+    // "streaming",
     "user-library-read",
 ];
 const allCountries = [
