@@ -50,8 +50,8 @@ If no results show up, you can reload a shelf by editing the _Results for_ field
 
 <figure>
   <img
-  src="docs/images/gerry.gif"
-  alt="The beautiful MDN logo.">
+  src="docs/images/Gerry.gif"
+  alt="Retyping search request.">
   <figcaption>Finetune Your Search</figcaption>
 </figure>
 
@@ -62,7 +62,7 @@ If that still doesn't help, you can always switch the country - if just out of c
 <figure>
   <img
   src="docs/images/heavy-metal.gif"
-  alt="The beautiful MDN logo.">
+  alt="Changing country selection.">
   <figcaption>Check whether it's your country's fault</figcaption>
 </figure>
 
