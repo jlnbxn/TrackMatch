@@ -59,6 +59,3 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 - [Lee Martin's Guide to creating a JWT Token](https://leemartin.dev/creating-an-apple-music-api-token-e0e5067e4281)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-[^1]: Users of Apple Music should take notice that if you already have the item in your iCloud music library (with a status of ‘matched’), creating a playlist with the track will _not_ honor your choice of release, i.e., Apple Music will identify the track as a duplicate and merge it with the one in your library.
-[^2]: In many cases, song get uploaded when the equivalent song on Apple Music is an iTunes Digital Master, which will differ from the audio file of other streaming services.
