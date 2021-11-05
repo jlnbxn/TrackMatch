@@ -1,34 +1,27 @@
-<div align="center">
-  <a href="#">
-      <img src="./docs/assets/img/trackmatch-apple-music-logo.png" alt="TrackMatch Apple Music Logo" width="80" height="80"/>
-  </a>
-  <a href="#">
-    <img src="./docs/assets/img/trackmatch-spotify-logo.png" alt="TrackMatch Spotify Logo" width="80" height="80"/>
-    </a>
-</div>
-
-  <h3 align="center">TrackMatch</h3>
-
-  <p align="center">
-    A search and conversion tool for Apple Music and Spotify
-    <br />
-    <a href="https://trackmatch.netlify.app/">View App</a>
-    ·
-    <a href="https://github.com/othneildrew/TrackMatch/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/TrackMatch/issues">Request Feature</a>
-  </p>
-
 ## About
 
 **TrackMatch** is a Web App that allows you to quickly create playlists for Spotify and Apple Music by entering a list of songs or albums or through converting playlists between the two services.
 
-<div align="center">
-      <img src="./docs/assets/img/safari-desktop-apple-music.png" alt="Logo" />
-  <a href="#">
-    <img src="./docs/assets/img/safari-desktop-spotify.png" alt="Logo" />
-    </a>
-</div>
+<img
+  src="./docs/assets/img/safari-desktop-apple-music.png"
+  alt="TrackMatch Apple Music in Safari Browser"/>
+
+  <figcaption>TrackMatch Apple Music</figcaption>
+</figure>
+
+<figure>
+  <img
+  src="./docs/assets/img/safari-desktop-spotify.png"
+  alt="TrackMatch Spotify in Safari Browser"/>
+  <figcaption>TrackMatch Spotify</figcaption>
+</figure>
+
+<figure>
+  <img
+  src="./docs/assets/img/icons.png"
+  alt="TrackMatch Icons"/>
+  <figcaption>Provisional (Fav)Icons</figcaption>
+</figure>
 
 ### Built With
 
@@ -153,14 +146,10 @@ Since I worked extensively with both APIs in this project, I’ll let you in to 
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 ## Acknowledgments
 
 - [Spotlistr](https://www.spotlistr.com)
 - [Lee Martin's Guide to creating a JWT Token](https://leemartin.dev/creating-an-apple-music-api-token-e0e5067e4281)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 [^1]: Users of Apple Music should take notice that if you already have the item in your iCloud music library (with a status of ‘matched’), creating a playlist with the track will _not_ honor your choice of release, i.e., Apple Music will identify the track as a duplicate and merge it with the one in your library.
 [^2]: In many cases, song get uploaded when the equivalent song on Apple Music is an iTunes Digital Master, which will differ from the audio file of other streaming services.
