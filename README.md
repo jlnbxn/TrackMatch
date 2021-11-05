@@ -2,10 +2,10 @@
 
 **TrackMatch** is a Web App that allows you to quickly create playlists for Spotify and Apple Music by entering a list of songs or albums or through converting playlists between the two services.
 
+<figure>
 <img
   src="./docs/assets/img/safari-desktop-apple-music.png"
   alt="TrackMatch Apple Music in Safari Browser"/>
-
   <figcaption>TrackMatch Apple Music</figcaption>
 </figure>
 
