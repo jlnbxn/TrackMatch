@@ -159,13 +159,24 @@ export default class SpotifyApi {
     }
 
     async addItemsToPlaylist(playlist_id, uris) {
-        let request = { uris: uris };
-        return await fetch(`${this.base_uri}/playlists/${playlist_id}/tracks`, {
-            method: "POST",
-            headers: this.headers,
+        const tmp = [...uris];
+        let tracks = [];
 
-            body: JSON.stringify(request),
-        }).then((res) => res.json());
+        while (tmp.length) {
+            const newUris = tmp.splice(0, 100);
+            let request = { uris: newUris };
+            const newTracks = await fetch(
+                `${this.base_uri}/playlists/${playlist_id}/tracks`,
+                {
+                  method: "POST",
+                  headers: this.headers,
+
+                  body: JSON.stringify(request),
+                }
+            ).then((res) => res.json());
+            tracks = tracks.concat(newTracks);
+        }
+        return tracks;
     }
 
     async getAvailableMarkets() {
